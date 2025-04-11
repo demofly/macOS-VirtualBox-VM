@@ -1,17 +1,16 @@
 # macOS VirtualBox VM
 
-This is a preconfigured macOS VirtualBox Virtual Machine, along with a script for preparing a bootable install ISO image from a downloaded Mac OS installer app.
+This manual allows to setup macOS VirtualBox Virtual Machine, along with a commands for preparing a bootable install ISO image from a downloaded Mac OS installer app.
 
-*Note: The `create_install_iso.sh` script is tailored to macOS hosts, and the macOS High Sierra installer app. The script will will need to be modified to work with the installer app for other versions of macOS.*
+*Note: The `hdutil` commands is tailored to run on a macOS hosts, and the macOS installer app on it. 
 
 ## Prerequisites
 
-- You need a Mac to run the script `create_install_iso.sh` and generate HighSierra.iso file.
 - You need a Virtualbox installed on your hypervisor host (Win/Linux/Mac/whatever)
+- Download the macOS installer app if you have not already - search it as "Install macOS" in your AppStore. It should be located in your `Applications` directory.
 
 ## Part 1: Generate ISO on the Mac
 
-- Download the macOS installer app if you have not already - search it as "Install macOS" in your AppStore. It should be located in your `Applications` directory.
 - Prepare your virtual image with `hdiutil create -o /tmp/Sequoia -size 17g -volname ISO -layout SPUD -fs HFS+J -type UDTO -attach`
 - Follow this command according to your distro to fill the image: https://support.apple.com/en-us/101578 As an example, for Sequoia, it should be: `sudo /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/createinstallmedia --volume /Volumes/ISO`
 - Then, eject/unmount the ISO volume from your left panel in the Finder
