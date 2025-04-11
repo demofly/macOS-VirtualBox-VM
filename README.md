@@ -11,30 +11,48 @@ This is a preconfigured macOS VirtualBox Virtual Machine, along with a script fo
 
 ## Part 1: Generate ISO on the Mac
 
-- Download the macOS installer app if you have not already. It should be located in your `Applications` directory.
-- Copy `create_install_iso.sh` script from this git repo to your Mac.
-- Run `create_install_iso.sh`, which will create a file named `HighSierra.iso` **on your desktop**, which is based on the downloaded macOS installer app. It will take about 1-2 minutes or more.
-- Copy the resulting `HighSierra.iso` file from your desktop to your hypervisor host
+- Download the macOS installer app if you have not already - search it as "Install macOS" in your AppStore. It should be located in your `Applications` directory.
+- Prepare your virtual image with `hdiutil create -o /tmp/Sequoia -size 17g -volname ISO -layout SPUD -fs HFS+J -type UDTO -attach`
+- Follow this command according to your distro to fill the image: https://support.apple.com/en-us/101578 As an example, for Sequoia, it should be: `sudo /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/createinstallmedia --volume /Volumes/ISO`
+- Then, eject/unmount the ISO volume from your left panel in the Finder
+- Convert it: `hdiutil convert /tmp/Sequoia.cdr -format UDTO -o Sequoia.iso`
+- Copy the resulting `Sequoia.iso` file from your desktop to your hypervisor host
 
 ## Part 2: Initial configuration of the VM on the hypervisor host
 
 In the VirtualBox GUI: 
-- Open the virtual machine from the repo
-- Create a new virtual hard disk. Make sure that your new virtual hard drive is not set as an SSD, otherwise the High Sierra installer will format the drive as APFS, which is not yet recognized/supported by VirtualBox's EFI BIOS and you will not be able to boot from the hard drive.
-- Set the `HighSierra.iso` as an inserted disk in the VM's optical drive 
+- Create OS X VM.
+- Call it "Sequoia", for example. It will be used in commands below.
+- Select at least 40GB size disk.
+- Allocate not less 8GB of RAM
+- Check whether it uses EFI boot mode. Show it boot disk to the generated ISO file.
+- Use SATA AHCI controller for HDD. Avoid an SSD emulation.
+
+OR:
+- Open the virtual machine file config from the repo (`.vbox` file) and copy the ExtraData and `uuid` into `%USERPROFILE%\.VirtualBox\...\Sequoia\Sequoia.vbox`
+- Create a new virtual hard disk. Make sure that your new virtual hard drive is not set as an SSD, otherwise the macOS installer will format the drive as APFS, which is not yet recognized/supported by VirtualBox's EFI BIOS and you will not be able to boot from the hard drive.
+- Set the `Sequoia.iso` as an inserted disk in the VM's optical drive 
   
 ## Part 3: Patch the configuration of the VM you have created.
 
-- For Windows hosts, go to `%USERPROFILE%\.VirtualBox` directory
-- Checkout the `macOS.vbox` file from this git repo and copy `uuid` and `name` properties of `Machine` XML tag from the `.vbox` of your freshly created configuration into `macOS.vbox`.
-- Remove the `.vbox` file created by the Virtualbox (and copy the name of it to the clipboard)
-- Rename `macOS.vbox` to the name from your clipboard. Put it into this directory (`%USERPROFILE%\.VirtualBox`)
-- Edit the VM's CD and HDD - it will point to a wrong places until you edit it. Point them to a correct images you have created before.
+- Allow it to have TPM 2.0 module with ICH9 mainboard
+- Use VMSVGA without acceleration and 256MB of memory: `VBoxManage modifyvm "Sequoia" --vram 256`
+- Set the desired screen resolution: `VBoxManage setextradata "Sequoia" VBoxInternal2/EfiGraphicsResolution 1600x900`
+- Tune the CPU: `VBoxManage modifyvm "Sequoia" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff`
+- Add special extra data into the configuration:
+```
+VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
+VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
+VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
+VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
+VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
+```
 
 ## Part 4: installation
 
+- Detach or disable a networking device for VM.
 - Start the VM, and wait for the macOS installer boot.
-- When the boot completed, open **Disk Utility**. From the **View** menu enable the option to "Show all devices", and erase the virtual hard disk you have attached to this VM before.
+- When the boot completed, open **Disk Utility**. From the **View** menu enable the option to "Show all devices", and erase the virtual hard disk you have attached to this VM before and select Mac filesystem with journaling.
 - Quit the **Disk Utility**, and install MacOS to the newly initialized hard drive.
 - When the installer completes, reboot the VM. 
 - Remove the ISO disk from the virtual optical drive and reboot the VM again.
@@ -48,4 +66,3 @@ If you don't need to bind with your Apple ID (for example, if you are preparing 
 
 - No 2D/3D/OpenGL acceleration is supported for macOS, no 3D rendering is working (DRI/OGL view shows as an empty zone on the screen)
 - No Virtualbox Guest Tools are available for macOS, no shared folders are available
-- 1024x768 pixels screen size
