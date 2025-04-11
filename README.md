@@ -6,7 +6,8 @@ This manual allows to setup macOS VirtualBox Virtual Machine, along with a comma
 
 ## Prerequisites
 
-- You need a Virtualbox installed on your hypervisor host (Win/Linux/Mac/whatever)
+- You need a Virtualbox installed on your hypervisor host (Win/Linux/Mac/whatever) and at least 60GB of a free disk space for ISO (macOS installer) and VDI (virtual disk of the VM)
+- At least 70 GB of the free space **on the source macOS device** for generation of the ISO file with macOS installer (but in fact, it is the macOS recovery disk).
 - Download the macOS installer app if you have not already - search it as "Install macOS" in your AppStore. It should be located in your `Applications` directory.
 
 ## Part 1: Generate ISO on the Mac
