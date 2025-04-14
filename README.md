@@ -29,17 +29,17 @@ In the VirtualBox GUI:
 - Use SATA AHCI controller for HDD. Avoid an SSD emulation.
 
 OR:
-- Open the virtual machine file config from the repo (`.vbox` file) and copy the ExtraData and `uuid` into `%USERPROFILE%\.VirtualBox\...\Sequoia\Sequoia.vbox`
+- Open the virtual machine file config from the repo (`.vbox` file) and copy the ExtraData into `%USERPROFILE%\.VirtualBox\...\Sequoia\Sequoia.vbox`
 - Create a new virtual hard disk. Make sure that your new virtual hard drive is not set as an SSD, otherwise the macOS installer will format the drive as APFS, which is not yet recognized/supported by VirtualBox's EFI BIOS and you will not be able to boot from the hard drive.
 - Set the `Sequoia.iso` as an inserted disk in the VM's optical drive 
   
 ## Part 3: Patch the configuration of the VM you have created.
 
+- Allow it to have TPM 2.0 module with ICH9 mainboard.
 - On the Microsoft Windows:
-  - press Win+R, run console by entering `cmd` and pressing Enter after it
-  - Point it to a folder with your VirtualBox installed with the next command in the console:
-    `cd /d "%VBOX_MSI_INSTALL_PATH%"` to make the commands below executable
-- Allow it to have TPM 2.0 module with ICH9 mainboard
+  - press Win+R, run console by entering `cmd` and pressing Enter after it;
+  - point it to a folder with your VirtualBox installed with the next command in the console:
+    `cd /d "%VBOX_MSI_INSTALL_PATH%"` to make the commands below executable.
 - Use VMSVGA without acceleration and 256MB of memory:
   `VBoxManage modifyvm "Sequoia" --vram 256`
 - Set the desired screen resolution (I've set 1600x900):
