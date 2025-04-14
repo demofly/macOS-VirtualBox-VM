@@ -35,18 +35,25 @@ OR:
   
 ## Part 3: Patch the configuration of the VM you have created.
 
+- On the Microsoft Windows:
+  - press Win+R, run console by entering `cmd` and pressing Enter after it
+  - Point it to a folder with your VirtualBox installed with the next command in the console:
+    `cd /d "%VBOX_MSI_INSTALL_PATH%"` to make the commands below executable
 - Allow it to have TPM 2.0 module with ICH9 mainboard
-- Use VMSVGA without acceleration and 256MB of memory: `VBoxManage modifyvm "Sequoia" --vram 256`
-- Set the desired screen resolution: `VBoxManage setextradata "Sequoia" VBoxInternal2/EfiGraphicsResolution 1600x900`
-- Tune the CPU: `VBoxManage modifyvm "Sequoia" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff`
+- Use VMSVGA without acceleration and 256MB of memory:
+  `VBoxManage modifyvm "Sequoia" --vram 256`
+- Set the desired screen resolution (I've set 1600x900):
+  `VBoxManage setextradata "Sequoia" VBoxInternal2/EfiGraphicsResolution 1600x900`
+- Tune the CPU:
+  `VBoxManage modifyvm "Sequoia" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff`
 - Add special extra data into the configuration:
-```
-VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
-VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
-VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
-VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
-VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
-```
+  ```
+  VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
+  VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
+  VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
+  VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
+  VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 0
+  ```
 
 ## Part 4: installation
 
