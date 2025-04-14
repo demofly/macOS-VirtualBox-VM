@@ -17,9 +17,14 @@
     </MediaRegistry>
     <ExtraData>
       <ExtraDataItem name="GUI/LastCloseAction" value="PowerOff"/>
-      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="139,209,1200,702"/>
-      <ExtraDataItem name="GUI/ScaleFactor" value="1.5"/>
+
       <ExtraDataItem name="VBoxInternal2/EfiGraphicsResolution" value="1600x900"/>
+
+      <ExtraDataItem name="VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" value="Iloveapple"/>
+      <ExtraDataItem name="VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" value="iMac11,3"/>
+      <ExtraDataItem name="VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" value="1.0"/>
+      <ExtraDataItem name="VBoxInternal/Devices/smc/0/Config/DeviceKey" value="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"/>
+      <ExtraDataItem name="VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" value="0"/>
     </ExtraData>
     <Hardware>
       <Memory RAMSize="8192"/>
