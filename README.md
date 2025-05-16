@@ -12,10 +12,19 @@ This manual allows to setup macOS VirtualBox Virtual Machine, along with a comma
 
 ## Part 1: Generate ISO on the Mac
 
-- Prepare your virtual image with `hdiutil create -o /tmp/Sequoia -size 17g -volname ISO -layout SPUD -fs HFS+J -type UDTO -attach`
-- Follow this command according to your distro to fill the image: https://support.apple.com/en-us/101578 As an example, for Sequoia, it should be: `sudo /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/createinstallmedia --volume /Volumes/ISO`
+- Prepare your virtual image with
+  ```
+  hdiutil create -o /tmp/Sequoia -size 17g -volname ISO -layout SPUD -fs HFS+J -type UDTO -attach
+  ```
+- Follow this command according to your distro to fill the image: https://support.apple.com/en-us/101578 As an example, for Sequoia, it should be:
+  ```
+  sudo /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/createinstallmedia --volume /Volumes/ISO
+  ```
 - Then, eject/unmount the ISO volume from your left panel in the Finder
-- Convert it: `hdiutil convert /tmp/Sequoia.cdr -format UDTO -o Sequoia.iso`
+- Convert it:
+  ```
+  hdiutil convert /tmp/Sequoia.cdr -format UDTO -o Sequoia.iso
+  ```
 - Copy the resulting `Sequoia.iso` file from your desktop to your hypervisor host
 
 ## Part 2: Initial configuration of the VM on the hypervisor host
@@ -39,7 +48,10 @@ OR:
 - On the Microsoft Windows:
   - press Win+R, run console by entering `cmd` and pressing Enter after it;
   - point it to a folder with your VirtualBox installed with the next command in the console:
-    `cd /d "%VBOX_MSI_INSTALL_PATH%"` to make the commands below executable.
+    ```
+    cd /d "%VBOX_MSI_INSTALL_PATH%"
+    ```
+    to make the commands below executable.
 - Use VMSVGA without acceleration and 256MB of memory:
   ```
   VBoxManage modifyvm "Sequoia" --vram 256
