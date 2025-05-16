@@ -41,11 +41,17 @@ OR:
   - point it to a folder with your VirtualBox installed with the next command in the console:
     `cd /d "%VBOX_MSI_INSTALL_PATH%"` to make the commands below executable.
 - Use VMSVGA without acceleration and 256MB of memory:
-  `VBoxManage modifyvm "Sequoia" --vram 256`
+  ```
+  VBoxManage modifyvm "Sequoia" --vram 256
+  ```
 - Set the desired screen resolution (I've set 1600x900):
-  `VBoxManage setextradata "Sequoia" VBoxInternal2/EfiGraphicsResolution 1600x900`
+  ```
+  VBoxManage setextradata "Sequoia" VBoxInternal2/EfiGraphicsResolution 1600x900
+  ```
 - Tune the CPU:
-  `VBoxManage modifyvm "Sequoia" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff`
+  ```
+  VBoxManage modifyvm "Sequoia" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
+  ```
 - Add special extra data into the configuration:
   ```
   VBoxManage setextradata "Sequoia" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
@@ -63,7 +69,11 @@ OR:
 - Quit the **Disk Utility**, and install MacOS to the newly initialized hard drive.
 - When the installer completes, reboot the VM. 
 - Remove the ISO disk from the virtual optical drive and reboot the VM again.
-- With the Installer ISO image not available to boot from, you will be dumped into the EFI Shell. Enter the following at the EFI prompt to boot macOS from the virtual hard drive and finish installation: `FS1:"macOS Install Data\Locked Files\Boot Files\boot.efi"` Alternatively, you can enter `exit` at the prompt to go to the EFI BIOS boot screen, and use the `Boot from file` option to navigate to boot.efi. This is required only once.
+- With the Installer ISO image not available to boot from, you will be dumped into the EFI Shell. Enter the following at the EFI prompt to boot macOS from the virtual hard drive and finish installation:
+  ```
+  FS1:"macOS Install Data\Locked Files\Boot Files\boot.efi"
+  ```
+  Alternatively, you can enter `exit` at the prompt to go to the EFI BIOS boot screen, and use the `Boot from file` option to navigate to boot.efi. This is required only once.
 
 ## Post installation steps
 
