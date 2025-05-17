@@ -20,10 +20,12 @@ This manual allows to setup macOS VirtualBox Virtual Machine, along with a comma
   ```
   sudo /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/createinstallmedia --volume /Volumes/ISO
   ```
-- Then, eject/unmount the ISO volume from your left panel in the Finder
-- Convert it:
+- Then, eject/unmount the ISO volume from your left panel in the Finder or with a command:
   ```
   hdiutil detach /Volumes/ISO
+  ```
+- Convert it:
+  ```
   hdiutil convert /tmp/Sequoia.cdr -format UDTO -o Sequoia.iso
   ```
 - Copy the resulting `Sequoia.iso` file from your desktop to your hypervisor host
