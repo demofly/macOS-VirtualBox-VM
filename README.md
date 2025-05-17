@@ -23,6 +23,7 @@ This manual allows to setup macOS VirtualBox Virtual Machine, along with a comma
 - Then, eject/unmount the ISO volume from your left panel in the Finder
 - Convert it:
   ```
+  hdiutil detach /Volumes/ISO
   hdiutil convert /tmp/Sequoia.cdr -format UDTO -o Sequoia.iso
   ```
 - Copy the resulting `Sequoia.iso` file from your desktop to your hypervisor host
